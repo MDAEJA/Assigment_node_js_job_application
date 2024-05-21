@@ -19,6 +19,6 @@ app.use(express.json());
 
 app.use(job_routers);
 
-app.listen(8090,()=>{
-    console.log("server is connected to port 8090")
+app.listen(10000,()=>{
+    console.log("server is connected to port 10000")
 })
