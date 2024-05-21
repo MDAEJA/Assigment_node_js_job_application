@@ -2,7 +2,9 @@
 const jobModel = require("../model/job_model") // import jobmodel file
 
 const createJobProfile = async (req,res)=>{
-    const jobData = req.body;
+
+    try{
+        const jobData = req.body;
     const newJobData = new jobModel(jobData);
     const savedData = await newJobData.save();
      console.log(savedData);
@@ -11,37 +13,74 @@ const createJobProfile = async (req,res)=>{
     status :true,
     content : 'new job profile added successfully'
   })
+
+    }
+    catch(err){
+        res.json({
+            status :false,
+            message : "Somethings went wrong, please try again but later"
+        })
+    }
+    
 }
 
 const listJobProfile = async (req,res)=>{
-   const jobList = await jobModel.find()
+    try{
+        const jobList = await jobModel.find()
 
-    res.json({
-      status :true,
-      jobList,
-    })
+        res.json({
+          status :true,
+          jobList,
+        })
+    }
+    catch(err){
+        res.json({
+            status :false,
+            message : "Somethings went wrong, please try again but later"
+        })
+    }
+    
+   
   }
 
   const updateJobProfile = async (req,res)=>{
-    const jod_id = req.params.id;
-    console.log(jod_id);
-    const updateData = req.body;
-   await jobModel.findByIdAndUpdate(jod_id,req.body)
-
-    res.json({
-      status :true,
-      content : 'update success'
-    })
+    try{
+        const jod_id = req.params.id;
+        console.log(jod_id);
+        const updateData = req.body;
+       await jobModel.findByIdAndUpdate(jod_id,req.body)
+    
+        res.json({
+          status :true,
+          content : 'update success'
+        })
+    }
+    catch(err){
+        res.json({
+            status :false,
+            message : "Somethings went wrong, please try again but later"
+        })
+    }
+    
   }
 
   const deleteJobProfile = async(req,res)=>{
-   const jod_id = req.params.id;
-   await jobModel.findByIdAndDelete(jod_id);
-
-    res.json({
-      status :true,
-      content :"Delete Success"
-    })
+    try{
+        const jod_id = req.params.id;
+        await jobModel.findByIdAndDelete(jod_id);
+     
+         res.json({
+           status :true,
+           content :"Delete Success"
+         })
+    }
+    catch(err){
+        res.json({
+            status :false,
+            message : "Somethings went wrong, please try again but later"
+        })
+    }
+   
   }
 
 
